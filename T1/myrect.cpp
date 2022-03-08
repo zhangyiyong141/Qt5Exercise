@@ -9,11 +9,17 @@ void MyRect::keyPressEvent(QKeyEvent *event)
 
     if (event->key() == Qt::Key_Left)
     {
-        setPos(x()-10, y());
+        if (pos().x() > 0)
+        {
+            setPos(x()-10, y());
+        }
     }
     else if (event->key() == Qt::Key_Right)
     {
-        setPos(x()+10, y());
+        if (pos().x() + rect().width() < 800)
+        {
+            setPos(x()+10, y());
+        }
     }
     else if (event->key() == Qt::Key_Up)
     {
