@@ -1,11 +1,14 @@
 #include "game.h"
 #include <QTimer>
+#include <QBrush>
+#include <QImage>
 
 Game::Game()
 {
     //创建Qt可视化场景
      _scene = new QGraphicsScene();
      _view = new QGraphicsView(_scene);
+     _view->setBackgroundBrush(QBrush(QImage(":/images/picture/bg.png")));
 
      //创建游戏场景中必要设置控制器
      _gameController = new GameController(_scene);
@@ -22,7 +25,7 @@ Game::Game()
 void Game::show()
 {
     //创建Qt可视化场景
-    _scene->setSceneRect(0,0,800,600);
+    _scene->setSceneRect(0,0,800,600);  //背景尺寸800x600
     _view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     _view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     _view->show();
@@ -30,11 +33,11 @@ void Game::show()
 
 
     //创建一个游戏主角色，由玩家控制
-    _player->setRect(0, 0, 100, 100);
+    //_player->setRect(0, 0, 100, 100);
     _player->setFlag(QGraphicsItem::ItemIsFocusable);
     _player->setFocus();
     _scene->addItem(_player);
-    _player->setPos(_view->width()/2, _view->height() - _player->rect().height());
+    _player->setPos(_view->width()/2, _view->height() -150);
 
     //游戏界面
     _scene->addItem(_scoreBoard);

@@ -1,10 +1,13 @@
 #ifndef MYRECT_H
 #define MYRECT_H
 
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 
-class MyRect : public QGraphicsRectItem
+class MyRect : public QGraphicsPixmapItem
 {
+    //玩家角色，尺寸100x100
+public:
+    MyRect();
 public:
     void keyPressEvent(QKeyEvent * event);
 };

@@ -31,3 +31,6 @@ HEADERS  += \
     healthboard.h
 
 FORMS    +=
+
+RESOURCES += \
+    res.qrc

@@ -4,6 +4,12 @@
 #include <QKeyEvent>
 #include <QGraphicsScene>
 
+MyRect::MyRect()
+{
+    setPixmap(QPixmap(":/images/picture/J20_n.png"));
+    setTransformOriginPoint(50, 50);
+}
+
 void MyRect::keyPressEvent(QKeyEvent *event)
 {
 
@@ -16,7 +22,7 @@ void MyRect::keyPressEvent(QKeyEvent *event)
     }
     else if (event->key() == Qt::Key_Right)
     {
-        if (pos().x() + rect().width() < 800)
+        if (pos().x() + 100 < 800)
         {
             setPos(x()+10, y());
         }
@@ -32,7 +38,7 @@ void MyRect::keyPressEvent(QKeyEvent *event)
     else if (event->key() == Qt::Key_Space)
     {
         Bullet * bullet = new Bullet();
-        bullet->setPos(x(), y());
+        bullet->setPos(x() + 45, y());
         scene()->addItem(bullet);
         qDebug() << "fire a bullet.";
     }
