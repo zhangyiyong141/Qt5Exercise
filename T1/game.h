@@ -6,12 +6,18 @@
 #include "healthboard.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QWidget>
+#include <QtWidgets>
+#include <QMap>
+#include <QTimer>
+#include <QKeyEvent>
 
-
-class Game
+class Game : public QWidget
 {
+    Q_OBJECT
+
 public:
-    Game();
+    explicit Game(QWidget *parent = 0);
     void show();
 
     ScoreBoard* getScoreBoard();
@@ -31,6 +37,16 @@ private:
     //游戏界面
     ScoreBoard * _scoreBoard = NULL;
     HealthBoard * _healthBoard = NULL;
+
+//----  ----键盘输入----  ----
+public:
+    QMap<int, bool> keys;
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+
+private slots:
+    void keyboardControlCallback();
+//----  ----键盘输入----  ----
 };
 
 #endif // GAME_H

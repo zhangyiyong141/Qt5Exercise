@@ -1,10 +1,12 @@
 #include "game.h"
-#include <QTimer>
 #include <QBrush>
 #include <QImage>
+#include <QDebug>
 
-Game::Game()
+
+Game::Game(QWidget *parent) : QWidget(parent)
 {
+    setFocusPolicy(Qt::StrongFocus);
     //创建Qt可视化场景
      _scene = new QGraphicsScene();
      _view = new QGraphicsView(_scene);
@@ -29,15 +31,14 @@ void Game::show()
     _view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     _view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     _view->show();
-    _view->setFixedSize(800, 600);
+    _view->setFixedSize(810, 610);
 
 
     //创建一个游戏主角色，由玩家控制
-    //_player->setRect(0, 0, 100, 100);
     _player->setFlag(QGraphicsItem::ItemIsFocusable);
-    _player->setFocus();
-    _scene->addItem(_player);
+    //_player->setFocus();
     _player->setPos(_view->width()/2, _view->height() -150);
+    _scene->addItem(_player);
 
     //游戏界面
     _scene->addItem(_scoreBoard);
@@ -48,6 +49,11 @@ void Game::show()
     QTimer * timer = new QTimer();
     QObject::connect(timer, SIGNAL(timeout()), _gameController, SLOT(spawn()));
     timer->start(2000);
+
+     QTimer * _keyboardEventTimer = new QTimer();
+    _keyboardEventTimer->setInterval(1000/60);
+    QObject::connect(_keyboardEventTimer, SIGNAL(timeout()), this, SLOT(keyboardControlCallback()));
+     _keyboardEventTimer->start();
 }
 
 ScoreBoard *Game::getScoreBoard()
@@ -58,4 +64,26 @@ ScoreBoard *Game::getScoreBoard()
 HealthBoard *Game::getHealthBoard()
 {
     return _healthBoard;
+}
+
+void Game::keyReleaseEvent(QKeyEvent *event)
+{
+    keys[event->key()] = false;
+    QWidget::keyReleaseEvent(event);
+}
+
+void Game::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Left)
+    {
+        qDebug() << "event key left";
+    }
+    keys[event->key()] = true;
+    QWidget::keyPressEvent(event);
+    qDebug() << "event key exe";
+}
+
+void Game::keyboardControlCallback()
+{
+    _player->keyboardControlCallback();
 }
