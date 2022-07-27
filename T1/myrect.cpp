@@ -46,36 +46,40 @@ void MyRect::keyPressEvent(QKeyEvent *event)
 
 void MyRect::keyReleaseEvent(QKeyEvent *event)
 {
-    //左按 右按 右松 左松
-    //holding 左
-    //右 左 右
-    //holding 右
     keys[event->key()] = false;
+
+    //解决左右移动按键冲突
+    if (event->key() == Qt::Key_Left || event->key() == Qt::Key_Right)
+    {
+        if (keys[Qt::Key_Left] == false && keys[Qt::Key_Right]  == false)
+        {
+            _holdingRow = 0;
+        }
+    }
+    if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down)
+    {
+        if (keys[Qt::Key_Up] == false && keys[Qt::Key_Down]  == false)
+        {
+            _holdingColumn = 0;
+        }
+    }
 
 }
 
 void MyRect::keyPressEvent(QKeyEvent *event)
 {
     keys[event->key()] = true;
-    if (event->key() == Qt::Key_Left)
+
+    //解决左右移动按键冲突
+    if (event->key() == Qt::Key_Left || event->key() == Qt::Key_Right)
     {
-        if (!_holdingRight)
-            _holdingLeft = true;
-        keys[Qt::Key_Right] = false;
+        _holdingRow++;
+        keys[event->key()] = _holdingRow;
     }
-    if (event->key() == Qt::Key_Right)
+    if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down)
     {
-        if (!_holdingLeft)
-            _holdingRight = true;
-        keys[Qt::Key_Left] = false;
-    }
-    if (event->key() == Qt::Key_Up)
-    {
-        keys[Qt::Key_Down] = false;
-    }
-    if (event->key() == Qt::Key_Down)
-    {
-        keys[Qt::Key_Up] = false;
+        _holdingColumn++;
+        keys[event->key()] = _holdingColumn;
     }
 }
 
@@ -86,27 +90,45 @@ void MyRect::keyboardControlCallback()
     if(keys[Qt::Key_Up])
     {
         txt += "up";
-        setPos(x(), y()-10);
+        if (keys[Qt::Key_Up] > keys[Qt::Key_Down])
+        {
+            if (pos().y() > 0)
+            {
+                setPos(x(), y()-10);
+            }
+        }
     }
     if(keys[Qt::Key_Down])
     {
         txt += "down";
-        setPos(x(), y()+10);
+        if (keys[Qt::Key_Down] > keys[Qt::Key_Up])
+        {
+            if (pos().y() + 100 < 600)
+            {
+                setPos(x(), y()+10);
+            }
+        }
     }
     if(keys[Qt::Key_Left])
     {
         txt += "left";
-        if (pos().x() > 0)
-        {\
-            setPos(x()-10, y());
+        if (keys[Qt::Key_Left] > keys[Qt::Key_Right])
+        {
+            if (pos().x() > 0)
+            {
+                setPos(x()-10, y());
+            }
         }
     }
     if(keys[Qt::Key_Right])
     {
         txt += "right";
-        if (pos().x() + 100 < 800)
+        if (keys[Qt::Key_Right] > keys[Qt::Key_Left])
         {
-            setPos(x()+10, y());
+            if (pos().x() + 100 < 800)
+            {
+                setPos(x()+10, y());
+            }
         }
     }
     if (keys[Qt::Key_Space])
