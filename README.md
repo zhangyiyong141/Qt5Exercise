@@ -8,4 +8,4 @@ move up, down, right and left:key_Up, key_Down, key_Right and key_Left.
 key_Space:fire a bullet.  
 Need to use mouse_left click the plane icon, then control the plane.  
 需要使用鼠标左键，点击飞机图标，才能开始操作飞机。  
-![Image text](https://github.com/zhangyiyong141/Qt5Exercise/blob/main/t1sh.png)
+![Image text](https://github.com/zhangyiyong141/Qt5Exercise/blob/main/t1.png)
