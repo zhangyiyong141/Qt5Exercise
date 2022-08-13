@@ -12,7 +12,7 @@ Enemy::Enemy()
 
 
     //绘制敌人图标
-    setPixmap(QPixmap(":/images/picture/japan_0_warii.png"));
+    setPixmap(QPixmap(":/images/picture/0.png"));
     setTransformOriginPoint(50, 50);
     setRotation(180);
     setScale(0.25);

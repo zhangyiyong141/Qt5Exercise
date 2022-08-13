@@ -1,12 +1,9 @@
 <RCC>
     <qresource prefix="/images">
-        <file>picture/america_plane_warii.png</file>
-        <file>picture/B17.png</file>
-        <file>picture/F22.png</file>
-        <file>picture/J20.png</file>
-        <file>picture/japan_0_warii.png</file>
-        <file>picture/su33.png</file>
         <file>picture/bg.png</file>
-        <file>picture/J20_n.png</file>
+        <file>picture/bullet.png</file>
+        <file>picture/20_n.png</file>
+        <file>picture/20.png</file>
+        <file>picture/0.png</file>
     </qresource>
 </RCC>
